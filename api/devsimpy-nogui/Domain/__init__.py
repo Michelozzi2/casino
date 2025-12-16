@@ -1,0 +1,22 @@
+__all__ = [
+	    "Basic",
+	    "Fuzzy",
+	    "PowerSystem",
+        "Genetic",
+	    "Generator",
+	    "Collector",
+	    "Binary",
+	    "GIS2",
+        "IoT",
+	    "Strategy",
+	    "GIS",
+	    "NN",
+        "CSS",
+        "FSM",
+        "Genetic2",
+        'MultiDemo',
+        "DEVSPhidgets",
+        'HIVAIDS',
+        "Financial5",
+        "Financial7"
+]

@@ -1,0 +1,8 @@
+*.pyc
+__pycache
+.DS_Store
+
+logs/
+users/
+
+simu.report
