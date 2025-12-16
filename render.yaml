@@ -1,0 +1,46 @@
+services:
+  # API FastAPI
+  - type: web
+    name: casino-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: CELERY_BROKER_URL
+        fromService:
+          type: redis
+          name: casino-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: redis
+          name: casino-redis
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: "3.11"
+
+  # Celery Worker
+  - type: worker
+    name: casino-worker
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: celery -A api.worker.celery worker --loglevel=info
+    envVars:
+      - key: CELERY_BROKER_URL
+        fromService:
+          type: redis
+          name: casino-redis
+          property: connectionString
+      - key: CELERY_RESULT_BACKEND
+        fromService:
+          type: redis
+          name: casino-redis
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: "3.11"
+
+  # Redis
+  - type: redis
+    name: casino-redis
+    plan: free
+    maxmemoryPolicy: noeviction
